@@ -38,3 +38,34 @@ mcm :: Int -> Int -> Int
 mcm unNumero otroNumero = (unNumero * otroNumero) `div` gcd unNumero otroNumero
 
 -- 10
+-- A
+-- DIA 1: 322 cm / DIA 2: 283 cm / DIA 3: 294 cm
+-- PRIMERO SACO MAXIMO Y MINIMO, Y DESPUES HAGO DIFERENCIA 
+dispersion :: Int -> Int -> Int -> Int 
+dispersion medicionDia1 medicionDia2 medicionDia3 = 
+    max (max medicionDia1 medicionDia2) medicionDia3 - min (min medicionDia1 medicionDia2) medicionDia3
+
+-- B
+diasNormales :: Int -> Int -> Int -> String 
+diasNormales medicionDia1 medicionDia2 medicionDia3  
+  | diasParejos medicionDia1 medicionDia2 medicionDia3 = "Parejos"
+  | diasLocos medicionDia1 medicionDia2 medicionDia3 = "Loco"
+  | otherwise = "Normales"
+
+diasParejos :: Int -> Int -> Int -> Bool 
+diasParejos medicionDia1 medicionDia2 medicionDia3 = dispersion medicionDia1 medicionDia2 medicionDia3 < 30
+
+diasLocos :: Int -> Int -> Int -> Bool
+diasLocos medicionDia1 medicionDia2 medicionDia3 = dispersion medicionDia1 medicionDia2 medicionDia3 > (1 * 100)
+
+-- 11
+pesoPino :: Int -> Int 
+pesoPino unaAltura 
+  | unaAltura <= 300 = unaAltura * 3
+  | otherwise = unaAltura * 2 
+
+esPesoUtil :: Int -> Bool 
+esPesoUtil unPeso = pesoPino unPeso >= 400 && pesoPino unPeso <= 1000 
+
+sirvePino :: Int -> Bool 
+sirvePino unaAltura = (esPesoUtil . pesoPino) unaAltura
