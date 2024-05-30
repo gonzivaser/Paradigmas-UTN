@@ -51,13 +51,13 @@ gonzi = UnBarbaro {
 -- -------------------------------------------- PUNTO 2 -------------------------------------------------------
 
 megafono :: Objeto 
-megafono unBarbaro = unBarbaro {habilidades = convertirEnMayuscula concatenarHabilidades $ habilidades unBarbaro}
+megafono unBarbaro = unBarbaro {habilidades = concatenarHabilidades . convertirEnMayuscula $ habilidades unBarbaro}
 
-concatenarHabilidades :: [String] -> String
-concatenarHabilidades unasHabilidades = concat unasHabilidades
+concatenarHabilidades :: [String] -> [String]
+concatenarHabilidades unasHabilidades = [concat unasHabilidades]
 
-convertirEnMayuscula :: String -> String
-convertirEnMayuscula unasHabilidades = map toUpper unasHabilidades
+convertirEnMayuscula :: [String] -> [String]
+convertirEnMayuscula unasHabilidades = map (map toUpper) unasHabilidades
 
 --megafonoBarbarico :: Objeto 
 
