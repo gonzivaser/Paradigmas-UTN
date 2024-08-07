@@ -39,13 +39,10 @@ encargo(marsellus, winston, ayudar(vincent)).
 encargo(marsellus, vincent, buscar(butch, losAngeles)).
 
 
-% CASOS PRUEBA
-personaje(gonzi, ladron([licorerias, estacionesDeServicio])).
-personaje(gad, mafioso(maton)).
-trabajaPara(gonzi, gad).
-trabajaPara(gad, gonzi).
-amigo(gonzi, gad).
-
+% CARACTERISTICAS
+caracteristicas(vincent,  [negro, muchoPelo, tieneCabeza]).
+caracteristicas(jules,    [tieneCabeza, muchoPelo]).
+caracteristicas(marvin,   [negro]).
 
 /*-------------------------------------------------- PUNTO 1 ---------------------------------------------------------*/
 
@@ -125,14 +122,10 @@ tieneCerca(Personaje, OtroPersonaje) :-
 
 /*-------------------------------------------------- PUNTO 5 ---------------------------------------------------------*/
 
-/*masAtareado/1. Es el más atareado aquel que tenga más encargos que cualquier otro personaje.
-*/
-
 masAtareado(Personaje) :-
     esPersonaje(Personaje),
     cantidadDeEncargos(Personaje, Cantidad), 
-    esPersonaje(OtroPersonaje), 
-    forall(cantidadDeEncargos(OtroPersonaje, OtraCantidad), Cantidad >= OtraCantidad).
+    forall((cantidadDeEncargos(OtroPersonaje, OtraCantidad), Personaje \= OtroPersonaje), Cantidad > OtraCantidad).
 
 cantidadDeEncargos(Personaje, Cantidad) :-
     listaDeEncargos(Personaje, ListaDeEncargos),
@@ -140,7 +133,6 @@ cantidadDeEncargos(Personaje, Cantidad) :-
 
 listaDeEncargos(Personaje, ListaDeEncargos) :-
     findall(Encargo, encargo(_, Personaje, Encargo), ListaDeEncargos).
-
 
 /*-------------------------------------------------- PUNTO 6 ---------------------------------------------------------*/
 
@@ -165,13 +157,13 @@ esRespetable(Personaje) :-
 
 /*-------------------------------------------------- PUNTO 7 ---------------------------------------------------------*/
 
-
 sonPersonajes(Personaje, OtroPersonaje) :-
     esPersonaje(Personaje),
     esPersonaje(OtroPersonaje).
 
 hartoDe(Personaje, OtroPersonaje) :-
     sonPersonajes(Personaje, OtroPersonaje),
+    Personaje \= OtroPersonaje,
     forall(encargo(Personaje, _, Tarea), requiereInteractuarConOtroPersonaje(Tarea, OtroPersonaje)).
 
 requiereInteractuarConOtroPersonaje(cuidar(OtroPersonaje), OtroPersonaje).
@@ -186,8 +178,14 @@ requiereInteractuarConOtroPersonaje(_, OtroPersonaje) :-
 
 /*-------------------------------------------------- PUNTO 8 ---------------------------------------------------------*/
 
-caracteristicas(vincent,  [negro, muchoPelo, tieneCabeza]).
-caracteristicas(jules,    [tieneCabeza, muchoPelo]).
-caracteristicas(marvin,   [negro]).
+duoDiferenciable(UnPersonaje, OtroPersonaje) :-
+    sonPersonajes(UnPersonaje, OtroPersonaje), 
+    sonParejaOAmigos(UnPersonaje, OtroPersonaje),
+    tieneCaracteristicasDiferentes(UnPersonaje, OtroPersonaje).
 
-/*Desarrollar duoDiferenciable/2, que relaciona a un dúo (dos amigos o una pareja) en el que uno tiene al menos una característica que el otro no. */
+tieneCaracteristicasDiferentes(UnPersonaje, OtroPersonaje) :-
+    caracteristicas(UnPersonaje, CaracteristicasUnPersonaje),
+    caracteristicas(OtroPersonaje, CaracteristicasOtroPersonaje),
+    member(Caracteristica, CaracteristicasUnPersonaje),
+    not(member(Caracteristica, CaracteristicasOtroPersonaje)).
+
