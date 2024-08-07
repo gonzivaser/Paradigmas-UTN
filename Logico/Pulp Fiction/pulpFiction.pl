@@ -24,26 +24,6 @@ trabajaPara(marsellus, vincent).
 trabajaPara(marsellus, jules).
 trabajaPara(marsellus, winston).
 
-% AMIGOS
-amigo(vincent, jules).
-amigo(jules, jimmie).
-amigo(vincent, elVendedor).
-
-% ENCARGO
-% encargo(Solicitante, Encargado, Tarea). 
-% las tareas pueden ser cuidar(Protegido), ayudar(Ayudado), buscar(Buscado, Lugar)
-encargo(marsellus, vincent,   cuidar(mia)).
-encargo(vincent,  elVendedor, cuidar(mia)).
-encargo(marsellus, winston, ayudar(jules)).
-encargo(marsellus, winston, ayudar(vincent)).
-encargo(marsellus, vincent, buscar(butch, losAngeles)).
-
-
-% CARACTERISTICAS
-caracteristicas(vincent,  [negro, muchoPelo, tieneCabeza]).
-caracteristicas(jules,    [tieneCabeza, muchoPelo]).
-caracteristicas(marvin,   [negro]).
-
 /*-------------------------------------------------- PUNTO 1 ---------------------------------------------------------*/
 
 esPersonaje(Personaje) :-
@@ -70,12 +50,19 @@ esMaton(Personaje) :-
 esLadronDeLicorerias(Personaje) :-
     personaje(Personaje, ladron([licorerias, _])).
 
-
 /*-------------------------------------------------- PUNTO 2 ---------------------------------------------------------*/
 
+% AMIGOS
+amigo(vincent, jules).
+amigo(jules, jimmie).
+amigo(vincent, elVendedor).
+
+sonPersonajes(Personaje, OtroPersonaje) :-
+    esPersonaje(Personaje),
+    esPersonaje(OtroPersonaje).
+
 duoTemible(UnPersonaje, OtroPersonaje) :-
-    esPersonaje(UnPersonaje),
-    esPersonaje(OtroPersonaje),
+    sonPersonajes(UnPersonaje, OtroPersonaje),
     sonPeligrsos(UnPersonaje, OtroPersonaje),
     sonParejaOAmigos(UnPersonaje, OtroPersonaje).
 
@@ -91,6 +78,16 @@ sonParejaOAmigos(UnPersonaje, OtroPersonaje) :-
 
 /*-------------------------------------------------- PUNTO 3 ---------------------------------------------------------*/
 
+% ENCARGO
+% encargo(Solicitante, Encargado, Tarea). 
+% las tareas pueden ser cuidar(Protegido), ayudar(Ayudado), buscar(Buscado, Lugar)
+encargo(marsellus, vincent,   cuidar(mia)).
+encargo(vincent,  elVendedor, cuidar(mia)).
+encargo(marsellus, winston, ayudar(jules)).
+encargo(marsellus, winston, ayudar(vincent)).
+encargo(marsellus, vincent, buscar(butch, losAngeles)).
+
+
 estaEnProblemas(butch).
 
 estaEnProblemas(Personaje) :-
@@ -98,19 +95,25 @@ estaEnProblemas(Personaje) :-
     cuidarAParejaOBuscarBoxeador(Personaje).
 
 cuidarAParejaOBuscarBoxeador(Personaje) :-
+    encargoDecuidarAParejaDeJefePeligroso(Personaje).
+
+cuidarAParejaOBuscarBoxeador(Personaje) :-
+    encargoDebuscarBoxeador(Personaje).
+
+encargoDebuscarBoxeador(Personaje) :-
+    encargo(_, Personaje, buscar(butch, _)).
+
+encargoDecuidarAParejaDeJefePeligroso(Personaje) :-
     trabajaPara(Jefe, Personaje),
     esPeligroso(Jefe),
     encargo(Jefe, Personaje, cuidar(Pareja)),
     pareja(Jefe, Pareja).
 
-cuidarAParejaOBuscarBoxeador(Personaje) :-
-    encargo(_, Personaje, buscar(butch, _)).
-
-
 /*-------------------------------------------------- PUNTO 4 ---------------------------------------------------------*/
 
 sanCayetano(Personaje) :-
-    esPersonaje(Personaje), 
+    esPersonaje(Personaje),
+    tieneCerca(Personaje, _), 
     forall(tieneCerca(Personaje, OtroPersonaje), encargo(Personaje, OtroPersonaje, _)).
 
 tieneCerca(Personaje, OtroPersonaje) :-
@@ -119,20 +122,17 @@ tieneCerca(Personaje, OtroPersonaje) :-
 tieneCerca(Personaje, OtroPersonaje) :-
     trabajaPara(Personaje, OtroPersonaje).
 
-
 /*-------------------------------------------------- PUNTO 5 ---------------------------------------------------------*/
 
 masAtareado(Personaje) :-
     esPersonaje(Personaje),
     cantidadDeEncargos(Personaje, Cantidad), 
-    forall((cantidadDeEncargos(OtroPersonaje, OtraCantidad), Personaje \= OtroPersonaje), Cantidad > OtraCantidad).
+    forall((cantidadDeEncargos(OtroPersonaje, OtraCantidad), Personaje \= OtroPersonaje), Cantidad >= OtraCantidad).
 
 cantidadDeEncargos(Personaje, Cantidad) :-
-    listaDeEncargos(Personaje, ListaDeEncargos),
+    esPersonaje(Personaje),
+    findall(Encargo, encargo(_, Personaje, Encargo), ListaDeEncargos),
     length(ListaDeEncargos, Cantidad).
-
-listaDeEncargos(Personaje, ListaDeEncargos) :-
-    findall(Encargo, encargo(_, Personaje, Encargo), ListaDeEncargos).
 
 /*-------------------------------------------------- PUNTO 6 ---------------------------------------------------------*/
 
@@ -157,10 +157,6 @@ esRespetable(Personaje) :-
 
 /*-------------------------------------------------- PUNTO 7 ---------------------------------------------------------*/
 
-sonPersonajes(Personaje, OtroPersonaje) :-
-    esPersonaje(Personaje),
-    esPersonaje(OtroPersonaje).
-
 hartoDe(Personaje, OtroPersonaje) :-
     sonPersonajes(Personaje, OtroPersonaje),
     Personaje \= OtroPersonaje,
@@ -175,8 +171,12 @@ requiereInteractuarConOtroPersonaje(buscar(OtroPersonaje, _), OtroPersonaje).
 requiereInteractuarConOtroPersonaje(_, OtroPersonaje) :-
     amigo(OtroPersonaje, _).
 
-
 /*-------------------------------------------------- PUNTO 8 ---------------------------------------------------------*/
+
+% CARACTERISTICAS
+caracteristicas(vincent,  [negro, muchoPelo, tieneCabeza]).
+caracteristicas(jules,    [tieneCabeza, muchoPelo]).
+caracteristicas(marvin,   [negro]).
 
 duoDiferenciable(UnPersonaje, OtroPersonaje) :-
     sonPersonajes(UnPersonaje, OtroPersonaje), 
@@ -186,6 +186,9 @@ duoDiferenciable(UnPersonaje, OtroPersonaje) :-
 tieneCaracteristicasDiferentes(UnPersonaje, OtroPersonaje) :-
     caracteristicas(UnPersonaje, CaracteristicasUnPersonaje),
     caracteristicas(OtroPersonaje, CaracteristicasOtroPersonaje),
+    caracteristicasDistintas(CaracteristicasUnPersonaje, CaracteristicasOtroPersonaje).
+
+caracteristicasDistintas(CaracteristicasUnPersonaje, CaracteristicasOtroPersonaje) :-
     member(Caracteristica, CaracteristicasUnPersonaje),
     not(member(Caracteristica, CaracteristicasOtroPersonaje)).
 
