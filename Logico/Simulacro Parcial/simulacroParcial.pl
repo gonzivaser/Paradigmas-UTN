@@ -66,9 +66,6 @@ sonPersonajes(Personaje, OtroPersonaje) :-
     esPersonaje(Personaje),
     esPersonaje(OtroPersonaje).
 
-fueVisitadoReinoTierra(Lugar, Estructura) :-
-    visito(_, reinoTierra(Lugar, Estructura)).
-
 fueVisitado(Lugar) :-
     visito(_, Lugar).
 
@@ -93,6 +90,19 @@ controlaAlgunElementoAvanzado(Personaje) :-
     esPersonaje(Personaje),
     controla(Personaje, Elemento),
     elementoAvanzadoDe(_, Elemento).
+
+clasificacion(Personaje, UnaClasificacion) :-
+    esPersonaje(Personaje),
+    clasificarPersonaje(Personaje, UnaClasificacion).
+
+clasificarPersonaje(Personaje, noEsMaestro) :-
+    noEsMaestro(Personaje).
+
+clasificarPersonaje(Personaje, esMaestroPrincipiante) :-
+    esMaestroPrincipiante(Personaje).
+
+clasificarPersonaje(Personaje, esMaestroAvanzado) :-
+    esMaestroAvanzado(Personaje).
 
 noEsMaestro(Personaje) :-
     esPersonaje(Personaje),
@@ -123,14 +133,14 @@ sigueA(aang, zuko).
 
 % NACION DEL FUEGO --> Como no es digna de conocer, no lo agrego a la base de conocimientos
 
-esDignoDeConocer(temploAire(_)).
-esDignoDeConocer(tribuAgua(norte)).
+esDignoDeConocer(Lugar) :-
+    fueVisitado(Lugar),
+    esDignoDeConocerSegunSuTipo(Lugar).
 
-esDignoDeConocer(reinoTierra(Lugar, Estructura)) :-
-    fueVisitadoReinoTierra(Lugar, Estructura),
-    noContieneMurosEnSuEstructura(reinoTierra(_, Estructura)).
+esDignoDeConocerSegunSuTipo(temploAire(_)).
+esDignoDeConocerSegunSuTipo(tribuAgua(norte)).
 
-noContieneMurosEnSuEstructura(reinoTierra(_, Estructura)) :-
+esDignoDeConocerSegunSuTipo(reinoTierra(Lugar, Estructura)) :-
     not(member(muro, Estructura)).
 
 /*------------------------------------------------- PUNTO 5 ------------------------------------------------------*/
@@ -139,7 +149,7 @@ esPopular(Lugar) :-
     fueVisitado(Lugar), 
     listaDePersonajesQueVisitaron(Lugar, PersonajesQueVisitaron),
     cantidadDePersonajesQueVisitaron(PersonajesQueVisitaron, CantidadDePersonajesQueVisitaron),
-    CantidadDePersonajesQueVisitaron >= 4.
+    CantidadDePersonajesQueVisitaron > 4.
 
 listaDePersonajesQueVisitaron(Lugar, PersonajesQueVisitaron) :-
     fueVisitado(Lugar),
