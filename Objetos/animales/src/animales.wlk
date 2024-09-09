@@ -22,6 +22,12 @@ object nano {
   method estaFeliz() {
     return true
   }
+
+  method curar() {
+    self.galopar(3)
+    self.comer(3000)
+    self.galopar(5)
+  }
 }
 
 /*---------------------------------------------- ANIMAL PEPITA ---------------------------------------------------*/
@@ -54,6 +60,10 @@ object pepita {
   method estaFeliz() {
     return dondeEsta == "Lihuel Calel"
   }
+
+  method curar() {
+    self.volarHacia("Lihuel Calel")
+  }
 }
 
 /*------------------------------------------------- ANIMAL KALI ------------------------------------------------------*/
@@ -84,5 +94,9 @@ object kali {
 
   method estaFeliz() {
     return edad >= 3
+  }
+
+  method curar() {
+    self.comer(400)
   }
 }

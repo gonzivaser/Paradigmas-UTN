@@ -1,0 +1,31 @@
+import src.animales.*
+
+/*---------------------------------------------- TEST DE PEPITA ---------------------------------------------------*/
+describe "pepita" {
+    test "pepita tiene una energia inicial" {
+        assert.equals(100, pepita.energia())
+    }
+
+    test "pepita no esta feliz" {
+        assert.notThat(pepita.estaFeliz())
+    }
+
+    test "pepita esta feliz luego de viajar a Lihuel Calel" {
+        pepita.volarHacia("Lihuel Calel")
+        assert.that(pepita.estaFeliz())
+    }
+}
+
+/*----------------------------------------------- TEST DE NANO ---------------------------------------------------*/
+describe "nano" {
+    test "nano tiene una energia inicial" {
+        assert.equals(100, nano.energia())
+    }
+}
+
+/*----------------------------------------------- TEST DE KALI ---------------------------------------------------*/
+describe "kali" {
+    test "kali tiene una energia inicial" {
+        assert.equals(100, kali.energia())
+    }
+}
