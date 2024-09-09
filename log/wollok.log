@@ -573,3 +573,9 @@
 {"level":"info","message":"⌛ Validating Objetos/pilasBloquesDeFiesta/pilasBloques.wlk","timeElapsed":103,"timestamp":"2024-08-28T21:58:33.767Z"}
 {"level":"info","message":"⌛ Validating Objetos/pilasBloquesDeFiesta/pilasBloques.wlk","timeElapsed":183,"timestamp":"2024-08-28T21:58:35.732Z"}
 {"level":"info","message":"⌛ Building environment","timeElapsed":130,"timestamp":"2024-08-28T21:58:40.664Z"}
+{"level":"info","message":"onRequest - STRONG_FILES_CHANGED:c:\\Users\\Usuario\\Desktop\\Paradigmas-GV-2024\\Objetos\\log","timestamp":"2024-08-28T22:00:45.964Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":138,"timestamp":"2024-08-28T22:00:46.102Z"}
+{"level":"info","message":"onRequest - WORKSPACE_URI:file:///c%3A/Users/Usuario/Desktop/Paradigmas-GV-2024","timestamp":"2024-08-28T22:00:46.239Z"}
+{"level":"info","message":"Removing diagnostics from \\Users\\Usuario\\Desktop\\Paradigmas-GV-2024\\Objetos\\log","timestamp":"2024-08-28T22:00:46.311Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":102,"timestamp":"2024-08-28T22:00:51.725Z"}
+{"level":"info","message":"⌛ Validating Objetos/pilasBloquesDeFiesta/pilasBloques.wlk","timeElapsed":132,"timestamp":"2024-08-28T22:00:51.867Z"}
