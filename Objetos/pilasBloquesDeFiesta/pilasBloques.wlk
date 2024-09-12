@@ -41,10 +41,6 @@ object capy {
     method tieneNumeroParDeLatas() {
       return latas % 2 == 0
     }
-    
-    method tieneTodoListo() {
-      return tieneNumeroParDeLatas()
-    }
 }
 
 object fiesta {
