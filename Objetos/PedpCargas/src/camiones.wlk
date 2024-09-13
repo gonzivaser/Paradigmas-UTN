@@ -15,6 +15,10 @@ object verdurin {
     method pesoDeCarga() {
         return cantidadDeCajones * pesoDeUnCajon
     }
+
+    method recorrer(unosKilometros, unaVelocidad) {
+        kilometrajeActual = kilometrajeActual + unosKilometros
+    }
 }
 
 /*----------------------------------------------- SCANION --------------------------------------------------------*/
@@ -33,6 +37,10 @@ object scanion5000 {
     method velocidadMaxima() {
         return 140
     }
+
+    method recorrer(unosKilometros, unaVelocidad) {
+        // No hace nada
+    }
 }
 
 /*----------------------------------------------- CAEREALITAS --------------------------------------------------------*/
@@ -47,5 +55,9 @@ object cerealitas {
         } else {
             return 60 - nivelDeDeterioro
         }
+    }
+
+    method recorrer(unosKilometros, unaVelocidad) {
+        nivelDeDeterioro = nivelDeDeterioro + (unaVelocidad - 45).max(0)
     }
 }
