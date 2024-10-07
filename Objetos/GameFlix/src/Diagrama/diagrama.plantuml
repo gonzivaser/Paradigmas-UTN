@@ -1,0 +1,101 @@
+@startuml diagrama
+
+abstract class Juego {
+    nombre 
+    precio 
+    categoria
+
+
+    perteneceAUnaCategoria(unaCategoria)
+    seLlama(unNombre)
+    {abstract} afectarA(unCliente, unasHoras)
+}
+
+class JuegoViolento extends Juego {
+    
+    -- 
+    afectarA(unCliente, unasHoras)
+}
+
+class Moba extends Juego {
+
+    -- 
+    afectarA(unCliente, unasHoras)
+}
+
+class JuegoDeTerror extends Juego {
+
+    -- 
+    afectarA(unCliente, unasHoras)
+}
+
+class JuegoEstrategico extends Juego {
+
+    -- 
+    afectarA(unCliente, unasHoras)
+}
+
+
+
+class Cliente {
+    humor
+    dinero
+    suscripcion
+
+    --
+    suscripcion(unaSuscripcion)
+    bajarHumor(unaCantidad)
+    subirHumor(unaCantidad)
+    pagar(unaCantidad)
+    pagarSuscripcion()
+}
+
+
+
+object gameFlix {
+    juegos 
+    clientes
+
+    --
+    juegosDeCategoria(unaCategoria)
+    juegoQueSeLlama(unNombre)
+    juegoRecomendado()
+    cobrarSuscripciones()
+}
+
+
+
+class SuscripcionPorCategoria implements Suscripcion {
+    categoria
+    precio
+
+
+    precio()
+    puedeJugar(unJuego)
+}
+
+object premium {
+    precio()
+    puedeJugarAJuego(unJuego)
+}
+
+object base {
+    precio()
+    puedeJugarAJuego(unJuego)
+}
+
+interface Suscripcion {
+    precio()
+    puedeJugarAJuego(unJuego)
+}
+
+
+
+gameFlix -l-> "*" Juego : juegos
+gameFlix -r-> "*" Cliente : clientes
+Cliente --> Suscripcion 
+premium .u.|> Suscripcion
+base .u.|> Suscripcion
+
+
+@enduml

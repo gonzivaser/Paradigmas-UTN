@@ -1,0 +1,2 @@
+class ElJuegoNoExisteException inherits Exception {
+}
