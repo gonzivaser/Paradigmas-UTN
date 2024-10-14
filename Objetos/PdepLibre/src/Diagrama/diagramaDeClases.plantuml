@@ -1,0 +1,97 @@
+@startuml diagramaPdepLibre
+
+class Cupon {
+    fueUsado
+    porcentajeDeDescuento
+
+    estaDiponible()
+    porcentajeDeDescuento()
+    precioConElDescuentoAplicado(unPrecio)
+    cuponFueUsado()
+}
+
+
+object pdepLibre {
+    productos
+    usuarios
+
+    penalizarAUsuariosMorosos()
+    usuariosMorosos()
+    eliminarCuponesUsados()
+    nombresDeProductoDeOferta()
+    actualizarNivelesDeUsuarios()
+}
+
+
+class Usuario {
+    nombre 
+    dineroDisponible
+    puntos 
+    nivel
+    carrito
+    cupones
+
+    agregarAlCarrito(unProducto)
+    comprarCarrito()
+    cuponDisponible()
+    precioDelCarrito()
+    sumarPuntos(unPrecio)
+    esMoroso()
+    reducirPuntos()
+    eliminarCuponesUsados()
+    actualizarNivel()
+    nivelSegunPuntos()
+}
+
+class NivelLimitado {
+    limiteDeProductos
+
+    puedeAgregarAlCarrito(cantidadDeProductos)
+}
+
+object oro {
+    puedeAgregarAlCarrito(cantidadDeProductos)
+}
+
+
+class Producto {
+    nombre
+    precioBase
+
+    precio()
+    nombreDeOferta()
+}
+
+class Indumentaria extends Producto {
+    esDeTemporadaActual
+
+    precio()
+}
+
+class Mueble extends Producto {
+    precio()
+}
+
+class Gangas extends Producto {
+    precio()
+    nombreDeOferta()
+}
+
+
+
+interface Nivel {
+}
+
+
+
+
+
+Usuario --> "*" Cupon
+Usuario -r-> Nivel 
+oro .u.|> Nivel
+NivelLimitado .u.|> Nivel
+
+pdepLibre --> "*" Producto
+pdepLibre --> "*" Usuario
+Usuario -l-> "*" Producto
+@enduml
