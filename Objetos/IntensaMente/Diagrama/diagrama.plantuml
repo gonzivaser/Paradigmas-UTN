@@ -1,0 +1,33 @@
+@startuml diagrama
+
+class Persona {
+    nivelDeFelicidad
+    emocionDominante
+    recuerdosDelDia
+    pensamientosCentrales
+}
+
+class Recuerdo {
+    descripcion
+    fechaDelRecuerdo
+    emocionDominanteDelRecuerdo
+}
+
+
+object alegria {
+}
+
+object tristeza {
+}
+
+object furia {
+}
+
+object temor {
+}
+
+object disgusto {
+}
+
+
+@enduml
