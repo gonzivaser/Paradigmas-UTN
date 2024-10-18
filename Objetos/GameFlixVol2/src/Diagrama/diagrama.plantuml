@@ -1,0 +1,90 @@
+@startuml gameFlixVol2
+object gameFlix {
+    juegos 
+    usuarios 
+
+    filtrarJuegosPorCategoria(unaCategoria)
+    juegoQueSeLlama(unNombre)
+    juegoAlAzar()
+    cobrarSuscripcion()
+}
+
+
+class Usuario {
+    suscripcion
+    dinero 
+    humor
+
+    filtrarJuegosPor(unaCategoria)
+    buscarJuegoQueSeLlama(unNombre)
+    recomendarJuego()
+    pagar(unaCantidad)
+    pagarSuscripcion()
+    suscripcion(unaSuscripcion)
+    reducirHumor(unaCantidad)
+    subirHumor(unaCantidad)
+    jugarA(unJuego, unasHoras)
+}
+
+
+class Juego {
+    nombre 
+    precioEnElMercado
+    categoria
+
+    perteneceAUnaCategoria(unaCategoria)
+    seLlama(unNombre)
+    saleMenosQue(unPrecio)
+    afectarA(unUsuario, unasHoras)
+}
+
+class JuegoViolento extends Juego {
+    afectarA(unUsuario, unasHoras)
+}
+
+class Moba extends Juego {
+    afectarA(unUsuario, unasHoras)
+}
+
+class JuegoDeTerror extends Juego {
+    afectarA(unUsuario, unasHoras)
+}
+
+class JuegoEstrategico extends Juego {
+    afectarA(unUsuario, unasHoras)
+}
+
+
+class SuscripcionesPorCategoria {
+    categoria
+    precio
+
+    puedeJugarA(unJuego)
+}
+
+object premium {
+    precio 
+
+    puedeJugarA(unJuego)
+}
+
+object base {
+    precio 
+
+    puedeJugarA(unJuego)
+}
+
+interface Suscripcion {
+    puedeJugarA(unJuego)
+}
+
+
+gameFlix --> "*" Usuario : Usuarios
+Usuario -l-> "*" Juego : Juegos
+Usuario -r-> Suscripcion
+premium .u.|> Suscripcion
+base .u.|> Suscripcion
+SuscripcionesPorCategoria .u.|> Suscripcion
+
+
+@enduml
