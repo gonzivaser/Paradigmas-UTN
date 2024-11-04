@@ -1,0 +1,94 @@
+@startuml diagramaIMPdep
+
+class Artista {
+    experiencia 
+    cantidadDePeliculasQueActuo
+    ahorros
+
+    sueldo()
+    recategorizarExperiencia()
+    modificarExperiencia(nuevaExperiencia)
+    nivelDeFama()
+    cantidadDePeliculasQueActuo()
+    actuar(unaPelicula)
+}
+
+object experienciaAmateur{
+    sueldoSegunExperiencia(unArtista)
+    recategorizarExperienciaDeArtista(unArtista)
+}
+
+object experienciaEstablecida {
+    sueldoSegunExperiencia(unArtista)
+    recategorizarExperienciaDeArtista(unArtista)
+}
+
+object experienciaEstrella {
+    sueldoSegunExperiencia(unArtista)
+    recategorizarExperienciaDeArtista(unArtista)
+}
+
+
+
+object imPdep {
+    peliculas
+
+    artistaConMejorPaga()
+    peliculasEconomicas()
+    sumaDeGananciasDePeliculasEconomicas()
+    recategorizarArtistas()
+}
+
+
+
+abstract class Pelicula {
+    nombre 
+    elenco
+
+    elenco()
+    nombre()
+    presupuestoTotal()
+    presupuestoDeArtistas()
+    recaudacionBase()
+    recaudacionTotal()
+    {abstract} recaudacionExtra()
+    gananciaTotal()
+    rodar()
+}
+
+class PeliculaDeDrama extends Pelicula {
+    recaudacionExtra()
+}
+
+class PeliculaDeAccion extends Pelicula {
+    vidriosRotos
+
+    presupuestoTotal()
+    recaudacionExtra()
+}
+
+class PeliculaDeTerror extends Pelicula {
+    cantidadDeCuchos
+
+    recaudacionExtra()
+}
+
+class PeliculaDeComedia extends Pelicula {
+    recaudacionExtra()
+}
+
+interface experiencia {
+    sueldoSegunExperiencia(unArtista)
+    recategorizarExperienciaDeArtista(unArtista)
+}
+
+
+imPdep --> "*" Pelicula : peliculas
+Pelicula -l-> "*" Artista : elenco
+Artista --> experiencia 
+experienciaAmateur .u.|> experiencia
+experienciaEstablecida .u.|> experiencia
+experienciaEstrella .u.|> experiencia
+
+
+@enduml
