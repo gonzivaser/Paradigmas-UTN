@@ -1,0 +1,90 @@
+@startuml diagramaDeSimulacroParcial2024
+
+abstract class SalaDeEscape {
+    nombre 
+    dificultad
+
+    precioBase()
+    {abstract} precioExtraSegunGenero()
+    precioTotal()
+    esDificil()
+    {abstract} condicionExtraSegunGenero
+    noEsDificil()
+    nombre()
+}
+
+class SalaDeEscapeDeAnime extends SalaDeEscape {
+    precioExtraSegunGenero()
+    condicionExtraSegunGenero()
+}
+
+class SalaDeEscapeDeHistoria extends SalaDeEscape {
+    estaBasadaEnHechosReales
+
+    precioExtraSegunGenero()
+    condicionExtraSegunGenero()
+}
+
+class SalaDeEscapeDeTerror extends SalaDeEscape {
+    cantidadDeSustos
+
+    cantidadDeSustosMayorA(unaCantidad)
+    precioExtraSegunGenero()
+    condicionExtraSegunGenero()
+}
+
+
+
+class Escapista {
+    maestria 
+    salasDeLasQueEscapo
+    saldoDeSuBilletera
+
+    puedeSalirDe(unaSala)
+    hizoMuchasSalas()
+    subirDeNivelDeMaestria()
+    nombreDeSalasDeLasQueEscapo()
+    registrarSalaDeEscape(unaSala)
+    pagar(unPrecio)
+    saldoDeSuBilletera()
+}
+
+object amateur {
+    puedeSalirDe(unaSala, unEscapista)
+    puedeSubirDeNivel()
+}
+
+object profesional {
+    puedeSalirDe(unaSala, unEscapista)
+    puedeSubirDeNivel()
+}
+
+interface maestria {
+    puedeSalirDe(unaSala, unEscapista)
+    puedeSubirDeNivel()
+}
+
+
+
+class Grupo {
+    escapistas
+
+    puedenSalirDe(unaSala)
+    agregarRegistroDe(unaSala)
+    montoAPagarPorEscapistaDe(unaSala)
+    pagar(unaSala)
+    puedenPagar(unaSala)
+    puedenPagarDeFormaIndividual(unaSala)
+    puedenPagarDeFormaGrupal(unaSala)
+    escaparDe(unaSala)
+}
+
+
+
+Grupo --> "*" Escapista : escapistas
+Escapista -l-> "*" SalaDeEscape : salasDeLasQueEscapo
+Escapista -r-> maestria
+amateur .u.|> maestria
+profesional .u.|> maestria
+
+@enduml
