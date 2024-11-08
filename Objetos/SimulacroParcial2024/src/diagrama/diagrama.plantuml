@@ -82,6 +82,7 @@ class Grupo {
 
 
 Grupo --> "*" Escapista : escapistas
+Grupo ..> SalaDeEscape
 Escapista -l-> "*" SalaDeEscape : salasDeLasQueEscapo
 Escapista -r-> maestria
 amateur .u.|> maestria
