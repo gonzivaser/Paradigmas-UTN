@@ -9,6 +9,9 @@ class Producto {
     }
 
     method precioExtraSegunProducto() 
+
+    // NOMBRE EN OFERTA
+    method nombreEnOferta()
 }
 
 /*------------------------------------------ CLASE PRODUCTO MUEBLE -----------------------------------------------*/
@@ -16,6 +19,11 @@ class Mueble inherits Producto {
     // PRECIO PRODUCTO 
     override method precioExtraSegunProducto() {
         return 1000
+    }
+
+    // NOMBRE EN OFERTA
+    override method nombreEnOferta() {
+        return "SUPEROFERTA" + nombre
     }
 }
 
@@ -31,6 +39,11 @@ class Indumentaria inherits Producto {
             return 0
         }
     }
+
+    // NOMBRE EN OFERTA
+    override method nombreEnOferta() {
+        return "SUPEROFERTA" + nombre
+    }
 }
 
 /*-------------------------------------------- CLASE PRODUCTO GANGA -----------------------------------------------*/
@@ -42,5 +55,10 @@ class Ganga inherits Producto {
 
     override method precioTotal() {
         return 0
+    }
+
+    // NOMBRE EN OFERTA
+    override method nombreEnOferta() {
+        return nombre + "COMPRAME POR FAVOR" 
     }
 }

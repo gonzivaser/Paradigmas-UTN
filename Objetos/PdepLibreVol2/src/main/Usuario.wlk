@@ -53,6 +53,21 @@ class Usuario {
         self.pagar(precioAPagar)
         self.sumarPuntos(precioAPagar, 10)
     }
+
+    // ES MOROSO
+    method esMoroso() {
+        return dineroDisponible < 0
+    }
+
+    // REDUCIR PUNTOS
+    method reducirPuntos(unaCantidad) {
+        puntos -= unaCantidad
+    }
+
+    // ELIMINAR CUPONES UTILIZADOS
+    method eliminarCuponesUtilizados() {
+        cupones = cupones.filter({ unCupon => unCupon.noFueUsado() })
+    }
 }
 
 
