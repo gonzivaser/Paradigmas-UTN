@@ -68,6 +68,17 @@ class Usuario {
     method eliminarCuponesUtilizados() {
         cupones = cupones.filter({ unCupon => unCupon.noFueUsado() })
     }
+
+    // ACTUALIZAR NIVEL
+    method actualizarNivel() {
+        if (puntos < 5000) {
+            nivel = bronce
+        } else if (puntos > 5000 && puntos < 15000) {
+            nivel = plata
+        } else {
+            nivel = oro
+        }
+    }
 }
 
 

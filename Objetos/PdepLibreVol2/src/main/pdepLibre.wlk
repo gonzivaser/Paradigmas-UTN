@@ -19,9 +19,13 @@ object pdepLibre {
     }
 
     // NOMBRE DE OFERTA DE LOS PRODUCTOS 
-    // QUE LOS PRODUCTOS MUEBLE Y INDUMENTARIA TENGAN ADELANTE DEL NOMBRE SUPEROFERTA
     method nombreDeOfertaDeLosProductos() {
-        productos.filter({ unProducto => unProducto.nombreEnOferta() })
+        return productos.map({ unProducto => unProducto.nombreEnOferta() })
+    }
+
+    // ACTUALIZAR EL NIVEL DE LOS USARIOS EN BASE A SUS PUNTOS 
+    method actualizarNivelDeUsuarios() {
+        usuarios.forEach({ unUsuario => unUsuario.actualizarNivel()})
     }
 
 }
