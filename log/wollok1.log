@@ -487,3 +487,5 @@
 {"level":"info","message":"⌛ Building environment","timeElapsed":112,"timestamp":"2024-09-12T14:07:21.671Z"}
 {"level":"info","message":"⌛ Validating Objetos/Atomico/src/ciudades.wlk","timeElapsed":105,"timestamp":"2024-09-12T14:07:21.778Z"}
 {"level":"info","message":"⌛ Validating Objetos/Atomico/src/centrales.wlk","timeElapsed":129,"timestamp":"2024-09-12T14:07:21.908Z"}
+{"level":"info","message":"⌛ Building environment","timeElapsed":192,"timestamp":"2024-12-13T14:33:18.782Z"}
+{"level":"info","message":"onRequest - WORKSPACE_URI:file:///c%3A/Users/Usuario/Desktop/Paradigmas-GV-2024","timestamp":"2024-12-13T14:33:18.789Z"}
