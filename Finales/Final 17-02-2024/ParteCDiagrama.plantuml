@@ -1,0 +1,48 @@
+@startuml parteCDiagrama
+
+class Pelicula {
+    personajes 
+
+    protagonista()
+    rompeEstereotipos()
+    {abstract} condicionExtra()
+}
+
+class PeliAventura extends Pelicula {
+    condicionExtra()
+}
+
+class PeliTerror extends Pelicula {
+    condicionExtra()
+}
+
+class PeliComedia extends Pelicula {
+    condicionExtra()
+}
+
+class PersonajeAnimado {
+    sosActuado()
+    esRescatado()
+}
+
+class PersonajeActuado {
+    genero
+    esRescatado
+
+    sosActuado()
+    genero()
+    esRescatado()
+}
+
+interface personajes {
+    sosActuado()
+    esRescatado()
+}
+
+Pelicula -r-> personajes
+PersonajeAnimado .u.|> personajes
+PersonajeActuado .u.|> personajes
+
+
+
+@enduml
