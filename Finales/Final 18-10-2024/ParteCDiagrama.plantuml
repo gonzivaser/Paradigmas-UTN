@@ -1,0 +1,29 @@
+@startuml diagrama
+
+class CalendarioVol2 {
+    eventos
+
+    estaLibre(unaFecha) 
+}
+
+class EventoDiaCompletoVol2 {
+    fecha
+
+    tieneLibre(unaFecha) 
+}
+
+class RecordatorioVol2 {
+    fecha
+
+    tieneLibre(unaFecha) 
+}
+
+interface eventos {
+    tieneLibre(unaFecha) 
+}
+
+CalendarioVol2 -r-> eventos
+EventoDiaCompletoVol2 .u.|> eventos
+RecordatorioVol2 .u.|> eventos
+
+@enduml
