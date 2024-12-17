@@ -8,27 +8,29 @@ class Parque {
     cobrarleA(unVisitante)
 }
 
-class Visitante {
+interface visitantes {
+    pagarEntrada()
+    tarifa()
+}
+
+abstract class Nino {
+    accesosDisponibles
+    saldo
     formaDePago
 
     tarifa()
-    pagarEntrada()
-}
-
-class Nino extends Visitante {
-    accesosDisponibles
-    saldo
-
-    tarifa()
+    {abstract} pagarEntrada()
     disminuirSaldo(unMonto)
     disminuirAccesos(unaCantidad)
 }
 
-class Adulto extends Visitante {
+abstract class Adulto {
     accesosDisponibles
     saldo
+    formaDePago
 
     tarifa()
+    {abstract} pagarEntrada()
     disminuirSaldo(unMonto)
     disminuirAccesos(unaCantidad)
 }
@@ -51,13 +53,13 @@ object conPaseRapido {
 }
 
 
-Parque --> "*" Visitante : visitantes
+Parque --> visitantes 
+Nino .u.|> visitantes
+Adulto .u.|> visitantes
 Nino --> formaDePago
 Adulto --> formaDePago
 conEfectivo .u.|> formaDePago
 conPrepaga .u.|> formaDePago
 conPaseRapido .u.|> formaDePago
-
-
 
 @enduml

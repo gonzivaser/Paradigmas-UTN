@@ -14,7 +14,7 @@ class Parque {
 
 
 /* PUNTO 1
-a) Falso, el parque podria tener una lista de adultos y niños 
+a) Falso, ya que se podria hacer una interfaz
 b) Falso, ya que aunque hay un intento de usar el polimorfismo como en tarifa() o pagarEntrada(), la cantidad de clases especificas da a entender el no buen uso de este
 c) Verdadero, ya que todos harian lo mismo con "pagarEntrada()" se repetiria toda la logica ya que cada clase lo hace distinto pero con el mimso objetivo
 d) Falso, ya que se usa herencia y no composicion
@@ -22,18 +22,14 @@ e) Falso, ya que la solucion propuesta no muestra manejo de errores
 */
 
 /* PUNTO 2 */
-class Visitante {
-    var formaDePago
-
-    method tarifa() 
-    method pagarEntrada()
-}
-
-class Nino inherits Visitante {
+class Nino {
     var accesosDisponibles
     var saldo
+    var formaDePago
 
-    override method tarifa() {
+    method pagarEntrada()
+
+    method tarifa() {
         return 50 + formaDePago.valorAgregado(self)
     }
 
@@ -46,11 +42,14 @@ class Nino inherits Visitante {
     }
 }
 
-class Adulto inherits Visitante {
+class Adulto {
     var accesosDisponibles
     var saldo
+    var formaDePago
 
-    override method tarifa() {
+    method pagarEntrada()
+
+    method tarifa() {
         return 100 + formaDePago.valorAgregado(self)
     }  
 
