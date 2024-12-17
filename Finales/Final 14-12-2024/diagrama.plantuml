@@ -1,0 +1,63 @@
+@startuml diagrama
+
+class Parque {
+    visitantes
+    saldo
+
+    cobrarEntrada()
+    cobrarleA(unVisitante)
+}
+
+class Visitante {
+    formaDePago
+
+    tarifa()
+    pagarEntrada()
+}
+
+class Nino extends Visitante {
+    accesosDisponibles
+    saldo
+
+    tarifa()
+    disminuirSaldo(unMonto)
+    disminuirAccesos(unaCantidad)
+}
+
+class Adulto extends Visitante {
+    accesosDisponibles
+    saldo
+
+    tarifa()
+    disminuirSaldo(unMonto)
+    disminuirAccesos(unaCantidad)
+}
+
+
+interface formaDePago {
+    valorAgregado(unVisitante)
+}
+
+object conEfectivo {
+    valorAgregado(unVisitante)
+}
+
+object conPrepaga {
+    valorAgregado(unVisitante)
+}
+
+object conPaseRapido {
+    valorAgregado(unVisitante)
+}
+
+
+Parque --> "*" Visitante : visitantes
+Nino --> formaDePago
+Adulto --> formaDePago
+conEfectivo .u.|> formaDePago
+conPrepaga .u.|> formaDePago
+conPaseRapido .u.|> formaDePago
+
+
+
+@enduml
