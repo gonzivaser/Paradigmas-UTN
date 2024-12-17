@@ -1,0 +1,54 @@
+@startuml diagrama 
+
+Class Autopista {
+    vehiculos
+    saldo 
+
+    cobrarPeaje()
+    cobrarleA(unVehiculo)
+}
+
+abstract Class Vehiculo {
+    {abstract} tarifa()
+    {abstract} pagarPeaje()
+}
+
+Class Auto extends Vehiculo {
+    tarifa
+
+    tarifa()
+    pagarPeaje()
+}
+
+class Camion extends Vehiculo {
+    cantidadDeEjes
+
+    tarifa()
+    pagarPeaje()
+}
+
+
+object conPass {
+
+}
+
+object conSube {
+
+}
+
+object conEfectivo {
+
+}
+
+interface formaDePago {
+    
+}
+
+Autopista --> "*" Vehiculo : vehiculos
+Auto --> formaDePago
+Camion --> formaDePago
+conPass .u.|> formaDePago
+conSube .u.|> formaDePago
+conEfectivo .u.|> formaDePago
+
+@enduml
