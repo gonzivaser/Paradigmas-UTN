@@ -1,15 +1,21 @@
 -- PUNTO 1
-habilidades :: Persona -> [Habilidad]
-sirve :: Problema -> Habilidad -> Bool
 
-podrianAyudar :: Problema -> [Persona] -> [Persona] 
-podrianAyudar problema unasPersonas = filter (any (sirve problema) . habilidades) unasPersonas
+type Persona = String
+type Habilidad = String
+
+sirve :: Problema -> Habilidad -> Bool
+habilidades :: Persona -> [Habilidad]
+
+podrianAyudar :: String -> [Persona] -> [Persona]
+podrianAyudar unProblema unasPersonas = filter (any sirve unProblema) . habilidades $ unasPersonas
 
 
 -- PUNTO 2
--- Se utiliza orden superior porque funciones filter y any son de orden superior
--- Se utilzia composicion ; aplicando primero habilidades a unas personas y despues any a sirve y esa lista de habilidades
--- Se utiliza aplicacion parcial ; Porque Al escribir sirve problema, se fija el primer argumento (problema) y queda pendiente el segundo argumento (Habilidad).
+-- Orden Superior: Porque se utilizan funcion como filter y any que estas son funciones de orden superior 
+-- Composicion: Ya que se esta combinando dos funciones en una, filter (any sirve unProblema) se compone con habilidades. Primero se aplica habilidades a la lista de personas y luego se aplica el filter a esta
+-- Aplicacion Parcial: sirve es parcialmente aplicadoo a unProblema y any es parcialmente aplicado a la funcion sirve unProblema
 
 -- PUNTO 3
--- Por lazy evaluation, si habria alguna habilidad que sirva, la evaluacion se detiene en ese punto, pero si no hay ninguna habilidad que le sirva la evaluacion no se detendria 
+-- Por la lazyEvaluation, si esta funcion se aplica a una lista infinita, no se va a evaluar toda la lista, sino que se va a ir evaluando de a uno hasta que se encuentre el primer elemento que cumpla con la condicion. En este caso, se va a ir evaluando de a uno hasta que se encuentre una persona que pueda ayudar con el problema
+
+
