@@ -32,7 +32,7 @@ interface juegoDeseado {
     cumpleRequerimientosParaJugar(unaPersona)
 }
 
-Persona --> juegoDeseado
+Persona ..|> juegoDeseado
 pelota .u.|> juegoDeseado
 JuegoDeMesa .u.|> juegoDeseado
 VideoJuego .u.|> juegoDeseado
