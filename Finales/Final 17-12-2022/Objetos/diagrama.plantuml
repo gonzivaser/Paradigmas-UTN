@@ -1,0 +1,42 @@
+@startuml diagrama
+
+class Persona {
+    edad
+    consolas
+    juegoDeseado
+
+    puedeJugar()
+}
+
+object pelota {
+    cumpleRequerimientosParaJugar(unaPersona)
+}
+
+class JuegoDeMesa {
+    edadMinima
+    edadMaxima
+
+    cumpleRequerimientosParaJugar(unaPersona)
+}
+
+class VideoJuego {
+    genero
+    consolaRequerida
+
+    cumpleRequerimientosParaJugar(unaPersona)
+    cumpleConEdadRequerida(unaPersona)
+    cumpleConConsolaRequerida(unaPersona)
+}
+
+interface juegoDeseado {
+    cumpleRequerimientosParaJugar(unaPersona)
+}
+
+Persona --> juegoDeseado
+pelota .u.|> juegoDeseado
+JuegoDeMesa .u.|> juegoDeseado
+VideoJuego .u.|> juegoDeseado
+
+
+
+@enduml
