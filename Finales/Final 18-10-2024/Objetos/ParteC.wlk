@@ -1,8 +1,9 @@
+/*EMPIEZA CODIGO CONSIGNA*/
 class Calendario {
     var eventos 
-
+    
     method estaLibre(fecha) {
-        return eventos.all({ evento => evento.esRecordatorio() or (not evento.esRecordatorio() and evento.fecha() != fecha) })
+        eventos.all({ evento => evento.esRecordatorio() or (not evento.esRecordatorio() and evento.fecha() != fecha) })
     }
 }
 
@@ -11,7 +12,7 @@ class EventoDiaCompleto {
 
     method esRecordatorio() {
         return false
-    }
+    } 
 }
 
 class Recordatorio {
@@ -19,17 +20,21 @@ class Recordatorio {
         return true
     }
 }
+/*TERMINA CODIGO CONSIGNA*/
 
-// PARTE 1
-// a) Falso ya que la clase calendario los esta tratando polimorficamente a traves del metodo esRecordatorio()
-// b) Falso, porque si class EventoVariosDias tiene una lista de fechas, en la parte de evento.fecha() devolveria una lista donde no se puede comparar directamente con fecha
+// 1
+/*
+  a) Falso, no es necesario agregar esa superclase porque los tipos de evento ya los esta tratando polimorficamente 
+     a traves del metodo esRecordatorio()
+  b) Falso, porque si class EventoVariosDias tiene una lista de fechas, en la parte de evento.fecha() devolveria una lista donde no se puede comparar directamente con fecha
+*/
 
-// PARTE 2
+// 2
 class CalendarioVol2 {
-    var eventos
+    var eventos 
 
     method estaLibre(unaFecha) {
-        return eventos.all({  unEvento => unEvento.tieneLibre(unaFecha) })
+        eventos.all({ unEvento => unEvento.tieneLibre(unaFecha) })
     }
 }
 
@@ -37,14 +42,11 @@ class EventoDiaCompletoVol2 {
     var property fecha
 
     method tieneLibre(unaFecha) {
-        return fecha != unaFecha
+        return unaFecha != fecha
     }
 }
 
-
 class RecordatorioVol2 {
-    var property fecha
-
     method tieneLibre(unaFecha) {
         return true
     }

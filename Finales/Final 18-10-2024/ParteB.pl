@@ -1,34 +1,55 @@
-precio(lata(atun, 100, nereida), 70). 
+% EMPIEZA CODIGO CONSIGNA 
+precio(lata(atun, 100, nereida), 70).
 precio(lata(atun, 200, nereida), 120).
-precio(lacteo(sancor, leche), 22). 
-compro(martina, lata(atun, 100, nereida)).
-compro(aye, lacteo(sancor, leche)).
+precio(lacteo(laSerenisima, leche), 15). 
+precio(lacteo(sancor, leche), 22).
+
+compro(martina, lata(atun, 100, nereida)). 
+compro(martina, lacteo(sancor, leche)). 
+compro(aye, lacteo(sancor, leche)). 
 
 cliente(Cliente) :-
-    compro(Cliente, _).
+    compro(Cliente, _). 
+% TERMINA CODIGO CONSIGNA 
 
-% PUNTO 1
+% 1
 comproMarca(UnCliente, UnaMarca) :-
     cliente(UnCliente), 
-    compro(UnCliente, UnProducto), 
-    marca(UnProducto, UnaMarca).
+    compro(Cliente, UnProducto),
+    esDeMarca(UnProducto, UnaMarca). 
 
-marca(lata(_, _, Marca), UnaMarca) :-
-    precio(lata(_, _, Marca), _), 
-    Marca = UnaMarca.
+esDeMarca(lata(_, _, OtraMarca), UnaMarca) :-
+    precio(lata(_, _, UnaMarca), _), 
+    OtraMarca = UnaMarca.
 
-marca(lacteo(Marca, _), UnaMarca) :-
-    precio(lacteo(Marca, _), _), 
-    Marca = UnaMarca.
+esDeMarca(lacteo(OtraMarca, _), UnaMarca) :-
+    precio(lacteo(UnaMarca, _), _), 
+    OtraMarca = UnaMarca.
 
-% PUNTO 2
+% 2
 marcaPopu1(Marca) :-
-    forall(cliente(Cliente), comproMarca(Cliente, Marca)).  % NO ESTA ASEGURANDO QUE HAYA CLIENTES QUE COMPREN ESA MARCA
+    forall(cliente(Cliente), comproMarca(Cliente, Marca)). 
+
+/*En este caso, esta mal la solucion porque no se liga la marca antes de entrar al forall.*/
 
 marcaPopu2(Marca) :-
-    forall(cliente(Cliente), forall(cliente(Cliente), comproMarca(Cliente, Marca))).   % NO ESTA ASEGURANDO QUE HAYA CLIENTES QUE COMPREN ESA MARCA Y EL FORALL SE APLICA SOLO SOBRE UN CLIENTE
+    cliente(Cliente), 
+    forall(cliente(Cliente), comproMarca(Cliente, Marca)). 
 
+/*
+  En este otro caso, tambien esta mal la solucion planteada porque no se verifica que todos los clientes hayan 
+  comprado esa marca sino que solo se verifica que un solo cliente haya comprado una sola marca.
+*/
+
+/*NO LO PIDE LA CONSIGNA PERO LO HAGO BIEN PARA PRACTICAR*/
 marcaPopuBienHecha(UnaMarca) :-
-    compro(_, Producto),
-    marca(Producto, UnaMarca),
-    forall(cliente(Cliente), comproMarca(Cliente, UnaMarca)).
+    esMarca(UnaMarca), 
+    forall(cliente(Cliente), comproMarca(Cliente, UnaMarca)). 
+
+esMarca(UnaMarca) :-
+    precio(lacteo(UnaMarca, _), _).
+
+esMarca(UnaMarca) :-
+    precio(lata(_, _, UnaMarca), _). 
+
+

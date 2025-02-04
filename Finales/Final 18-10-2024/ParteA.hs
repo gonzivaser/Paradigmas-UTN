@@ -1,33 +1,40 @@
+-- EMPIEZA CODIGO CONSIGNA 
 data Producto = Prod {
-    nombre :: [Char],
-    precio :: Float,
+    nombre :: [Char], 
+    precio :: Float, 
     precioCantidad :: Float
-}
+} 
 
--- PUNTO 1 
--- a) 
-queEmpieceConA :: Char -> Producto -> Bool
-queEmpieceConA unaLetra unProducto = (== unaLetra) . head . nombre $ unProducto
+-- queEmpieceConA = (== 'a) . head . nombre
+-- barato = (< 50) . precio 
+
+-- juan = [queEmpieceConA, barato]
+
+-- TERMINA CODIGO CONSIGNA 
+
+-- 1
+-- a)
+queEmpieceCon :: Char -> Producto -> Bool
+queEmpieceCon unaLetra = (== unaLetra) . head . nombre
+
+-- b) 
+-- juan = [queEmpieceCon "A", barato]
+{- 
+  En la representacion de Juan, ahora recibiria un caracter por parametro. Aca se estaria usando el concepto de aplicacion parcial 
+  porque se le esta pasando un solo parametro a la funcion queEmpieceCon en vez de los dos que necesita
+-}
+
+-- c)
+juan :: [Producto -> Bool]
+juan = [queEmpieceCon 'a', barato]
 
 barato :: Producto -> Bool
-barato unProducto = (< 50) . precio $ unProducto
+barato = (< 50) . precio
 
 
--- b)
--- YO MODELARIA A JUAN ASI
-data Persona = UnaPersona {
-    nombrePersona :: [Char],
-    criterios :: [Producto -> Bool]
-}
+-- 2
+productosElegidos :: [Producto] -> [Producto -> Bool] -> [Producto]
+productosElegidos unosProductos unosRequisitos = filter (\unProducto -> cumpleRequisitos unProducto unosRequisitos) unosProductos
 
--- c) 
--- LOS TIPOS DE JUAN SERIA
-juan :: [Producto -> Bool]
-juan = [ queEmpieceConA, barato ]
-
--- PUNTO 2
-productosElegidos :: [Producto] -> Persona -> [Producto]
-productosElegidos unosProductos unaPersona = filter (cumpleCriterios unaPersona) unosProductos
-
-cumpleCriterios :: Persona -> Producto -> Bool
-cumpleCriterios unaPersona unProducto = all ($ unProducto) . criterios $ unaPersona
+cumpleRequisitos :: Producto -> [Producto -> Bool] -> Bool
+cumpleRequisitos unProducto unosRequisitos = all(\unRequisito -> unRequisito unProducto) unosRequisitos
