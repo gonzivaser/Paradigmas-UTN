@@ -33,7 +33,12 @@ rockera(Banda) :-
 
 % 2
 /*
-   Las consultas que no funcioan correctamente son la c y la d, porque el predicado no es inversible para la banda, por lo que
-   las consultas con bandas fuera de la base de conocimiento devuelve true, y no se puede hacer consultas con variables libres.
+   Las consultas que no funcioan correctamente son la c y la d, porque el predicado no es inversible para la banda, 
+   por lo que las consultas con bandas fuera de la base de conocimiento devuelve true que seria en el caso de la consulta "c", 
+   y no se puede hacer consultas con variables libres como seria la consulta "d"
 */
 
+% 3
+rockeraBienHecha(UnaBanda) :-
+   toca(_, UnaBanda), 
+   forall(toca(UnTema, UnaBanda), genero(UnTema, rock)).
