@@ -1,54 +1,58 @@
-@startuml diagrama 
+@startuml diagrama
 
-Class Autopista {
-    vehiculos
-    saldo 
+abstract Class Autopista {
+    vehiculos 
+    saldo
 
     cobrarPeaje()
     cobrarleA(unVehiculo)
 }
 
 abstract Class Vehiculo {
+    metodoDePago
+
     {abstract} tarifa()
-    {abstract} pagarPeaje()
+    pagarPeaje()
 }
 
 Class Auto extends Vehiculo {
-    tarifa
-
     tarifa()
-    pagarPeaje()
 }
 
-class Camion extends Vehiculo {
+Class Camion extends Vehiculo {
     cantidadDeEjes
 
     tarifa()
-    pagarPeaje()
 }
 
+Class ConTelePeaje {
+    peajesDisponibles
 
-object conPass {
-
+    pagarSegunMetodo(unMonto)
 }
 
-object conSube {
+Class ConSube {
+    saldoSube
 
+    pagarSegunMetodo(unMonto)
 }
 
-object conEfectivo {
+Class ConEfectivo {
+    saldoEnEfectivo
 
+    pagarSegunMetodo(unMonto)
 }
 
-interface formaDePago {
-    
+interface metodoDePago {
+    pagarSegunMetodo(unMonto)
 }
 
 Autopista --> "*" Vehiculo : vehiculos
-Auto --> formaDePago
-Camion --> formaDePago
-conPass .u.|> formaDePago
-conSube .u.|> formaDePago
-conEfectivo .u.|> formaDePago
+Vehiculo -l-> metodoDePago
+ConTelePeaje .u.|> metodoDePago
+ConSube .u.|> metodoDePago
+ConEfectivo .u.|> metodoDePago
+
+
 
 @enduml

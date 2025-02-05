@@ -1,3 +1,4 @@
+% EMPIEZA CODIGO CONSIGNA 
 % genero(Cancion, Genero). 
 genero(el38, rock). 
 genero(sisters, reggae). 
@@ -5,31 +6,39 @@ genero(muchoPorHacer, rock).
 genero(tusOjos, reggae).
 genero(bastara, reggae).
 
-% toca(Tema, Banda).
+% toca(Cancion, Banda).
 toca(el38, divididos).
 toca(sisters, divididos).
 toca(muchoPorHacer, riff). 
 toca(tusOjos, losCafres).
 toca(bastara, losCafres).
 
+rockera(Banda) :-  
+    findall(Canciones, (toca(Cancion, Banda), genero(Cancion, Genero), Genero \= rock), Canciones), 
+    length(Canciones, 0).
+/* 
+   GENERA UNA LISTA DE CANCIONES QUE EL GENERO DE LAS CANCIONES SEA DISTINTO DE ROCK Y SE ASEGURA QUE ESA LISTA
+   TENGA LONGITUD 0. OSEA QUE LA LISTA GENERADA CON DISTINTOS TEMAS DE ROCK SEA 0
+*/
+% TERMINA CODIGO CONSIGNA 
 
-rockera(Banda) :- % GENERA UNA LISTA DE CANCIONES QUE NO SON DE ROCK, SI LA LISTA ES VACIA, LA BANDA ES ROCKERA
-    findall(Tema, (toca(Tema, Banda), genero(Tema, Genero), Genero \= rock), Temas), 
-    length(Temas, 0).
+% 1
+/*
+   a) rockera(riff). --> True, ya que no toca otro tema que no sea rock
+   b) rockera(divididos) --> False, ya que tiene una cancion que no es de rock, entonces la lista seria 1
+   c) rockera(42) --> True, ya que 42 no esta en la base de conocimientos, pero tampoco tieen otro tema distinto de rock, 
+      entonces va a devolver true. 
+   d) rockera(Banda) --> False, porque no se generan las bandas antes de entrar al findall
+*/
 
-    
-% PUNTO 1: DECIR EL RESULTADO DE LAS SIGUIENTES CONSULTAS
-% rockera(riff) -> true ; Porque riff toca solo temas de rock 
-% rockera(divididos) -> false ; Porque divididos toca temas de rock y reggae
-% rockera(42) -> true ; Porque 42 no toca temas, pero su lista de temas que no sean de rock es vacia, por lo que seria true
-% rockera(Banda) -> false ; Porque no se generan las bandas antes de entrar al findall
+% 2
+/*
+   Las consultas que no funcioan correctamente son la c y la d, porque el predicado no es inversible para la banda, 
+   por lo que las consultas con bandas fuera de la base de conocimiento devuelve true que seria en el caso de la consulta "c", 
+   y no se puede hacer consultas con variables libres como seria la consulta "d"
+*/
 
-
-% PUNTO 2: 
-% 1era: La consulta de rockera(Banda), no se puede realizar porque no se generan las bandas antes de entrar al findall
-% 2nda: La consulta de rockera(cualquierNombre), se realiza y devuelve true, porque se genera una lista de temas que no son de rock, y si la lista es vacia, la banda es rockera y tambien porque no se asegura de la existencia de las bandas que se consultan
-
-% PUNTO 3:
-rockeraVol2(UnaBanda) :-
-    toca(_, UnaBanda), 
-    forall(toca(Tema, UnaBanda), genero(Tema, rock)).
+% 3
+rockeraBienHecha(UnaBanda) :-
+   toca(_, UnaBanda), 
+   forall(toca(UnTema, UnaBanda), genero(UnTema, rock)).
