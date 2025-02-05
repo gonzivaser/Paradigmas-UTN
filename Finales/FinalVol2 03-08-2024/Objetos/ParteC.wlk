@@ -6,7 +6,6 @@
    d) Falso, porque no no muestra ningun tipo de manejo de errores
 */
 
-
 class Autopista {
     var vehiculos = []
     var saldo
@@ -21,39 +20,65 @@ class Autopista {
     }
 }
 
-class Auto {
-    var tarifa
-    var metodo
+class Vehiculo {
+    const tarifa 
+    var efectivo
+    var saldoSube
+    var peajesDisponibles
+    var metodoDePago
 
-    method tarifa() {
-        return tarifa
+    // TARIFA DE AUTO PARA QUE LA AUTOPISTA SE SUME A SU SALDO ESA TARIFA
+    method tarifa()
+
+    // PAGAR PEAJE PARA QUE SE APLIQUE LAS FORMAS DE PAGO
+    method pagarPeaje() {
+        metodoDePago.pagarSegunMetodo(self)
+    }
+
+    // DISMINUIR PEAJES DISPONIBLES
+    method disminuirPeajesDisponibles(unValor) {
+        peajesDisponibles -= unValor
+    }
+
+    // DISMINUIR SALDO DE SUBE
+    method disminuirSaldoDeSube() {
+        saldoSube = saldoSube - tarifa - (tarifa * 0.1)
+    }
+
+    // DISMINUIR EFECTIVO
+    method disminuirEfectivo() {
+        efectivo -= tarifa
     }
 }
 
-class Camion {
-    var cantEjes
-    var tarifa
-    var metodo
-
-    method tarifa() {
-        return tarifa * cantEjes
+class Auto inherits Vehiculo {
+    override method tarifa() {
+        return 10
     }
+}
 
-    method pagarPeaje() {
-        metodo.pagarAplicandoFormaDePago()
+class Camion inherits Vehiculo {
+    var cantidadDeEjes
+
+    override method tarifa() {
+        return 20 * cantidadDeEjes
     }
 }
 
 object conPass {
-    var cantidadPeajes = 100
-
-    
+    method pagarSegunMetodo(unVehiculo) {
+        unVehiculo.disminuirPeajesDisponibles(1)
+    }
 }
 
 object conSube {
-    var saldoSube = 100
+    method pagarSegunMetodo(unVehiculo) {
+        unVehiculo.disminuirSaldo()
+    }
 }
 
 object conEfectivo {
-    var efectivo = 100
+    method pagarSegunMetodo(unVehiculo) {
+        unVehiculo.disminuirEfectivo()
+    }
 }
