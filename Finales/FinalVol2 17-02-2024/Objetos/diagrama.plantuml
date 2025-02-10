@@ -1,0 +1,41 @@
+@startuml diagrama
+
+abstract Class Pelicula {
+    personajes 
+
+    protagonista()
+    rompeEstereotipos()
+    esActuado() 
+    noEsVaron()
+    {abstract} condicionExtraSegunGenero()
+}
+
+Class PeliAventura extends Pelicula {
+    condicionExtraSegunGenero()
+}
+
+Class PeliTerror extends Pelicula {
+    condicionExtraSegunGenero()
+}
+
+Class PeliComedia extends Pelicula {
+    condicionExtraSegunGenero()
+}
+
+Class Personaje {
+    sosActuado
+    esRescatado
+
+    sosActuado()
+    esRescatado()
+}
+
+Class PersonajeActuado extends Personaje {
+    genero 
+
+    genero()
+}
+
+Pelicula -r-> "*" Personaje : personajes
+
+@enduml
