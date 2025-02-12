@@ -1,65 +1,48 @@
 @startuml diagrama
 
-class Parque {
-    visitantes
-    saldo
+Class Parque {
+    visitantes 
+    saldo 
 
     cobrarEntrada()
     cobrarleA(unVisitante)
 }
 
-interface visitantes {
+abstract Class Visitante {
+    metodoDePago
+
+    {abstract} tarifa()
     pagarEntrada()
+}
+
+Class Niño extends Visitante {
     tarifa()
 }
 
-abstract class Nino {
+Class Adulto extends Visitante {
+    tarifa()
+}
+
+Class ConPaseRapido {
     accesosDisponibles
-    saldo
-    formaDePago
 
-    tarifa()
-    {abstract} pagarEntrada()
-    disminuirSaldo(unMonto)
-    disminuirAccesos(unaCantidad)
+    pagarSegunMetodo(unMonto)
 }
 
-abstract class Adulto {
-    accesosDisponibles
-    saldo
-    formaDePago
+Class ConTarjeta {
+    saldoTarjeta
 
-    tarifa()
-    {abstract} pagarEntrada()
-    disminuirSaldo(unMonto)
-    disminuirAccesos(unaCantidad)
+    pagarSegunMetodo(unMonto)
 }
 
-
-interface formaDePago {
-    valorAgregado(unVisitante)
+interface metodoDePago {
+    pagarSegunMetodo(unMonto)
 }
 
-object conEfectivo {
-    valorAgregado(unVisitante)
-}
+Parque --> "*" Visitante : visitantes
+Visitante -l-> metodoDePago
+ConPaseRapido .u.|> metodoDePago
+ConTarjeta .u.|> metodoDePago
 
-object conPrepaga {
-    valorAgregado(unVisitante)
-}
-
-object conPaseRapido {
-    valorAgregado(unVisitante)
-}
-
-
-Parque --> visitantes 
-Nino .u.|> visitantes
-Adulto .u.|> visitantes
-Nino --> formaDePago
-Adulto --> formaDePago
-conEfectivo .u.|> formaDePago
-conPrepaga .u.|> formaDePago
-conPaseRapido .u.|> formaDePago
 
 @enduml
