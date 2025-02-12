@@ -1,42 +1,50 @@
 @startuml diagrama
 
-class Persona {
+Class Persona {
     edad
     consolas
-    juegoDeseado
 
-    puedeJugar()
+    puedeJugar(unJuego)
+}
+
+interface juego {
+    puedeJugarSegunCondiciones(unaPersona)
 }
 
 object pelota {
-    cumpleRequerimientosParaJugar(unaPersona)
+    puedeJugarSegunCondiciones(unaPersona)
 }
 
-class JuegoDeMesa {
-    edadMinima
-    edadMaxima
+Class JuegoDeMesa {
+    edadMinima 
+    edadMaxima 
 
-    cumpleRequerimientosParaJugar(unaPersona)
+    puedeJugarSegunCondiciones(unaPersona)
 }
 
-class VideoJuego {
+Class VideoJuegos {
     genero
-    consolaRequerida
+    consolaPosible
 
-    cumpleRequerimientosParaJugar(unaPersona)
-    cumpleConEdadRequerida(unaPersona)
-    cumpleConConsolaRequerida(unaPersona)
+    puedeJugarSegunCondiciones(unaPersona)
+    tieneConsolaPosible(unasConsolas) 
 }
 
-interface juegoDeseado {
-    cumpleRequerimientosParaJugar(unaPersona)
+interface genero {
+    estaEnElRangoDeEdad(unaEdad)
 }
 
-Persona ..|> juegoDeseado
-pelota .u.|> juegoDeseado
-JuegoDeMesa .u.|> juegoDeseado
-VideoJuego .u.|> juegoDeseado
+Class Genero {
+    var edadMinima
 
+    estaEnElRangoDeEdad(unaEdad)
+}
 
+Persona ..> juego : juego
+pelota .u.|> juego
+JuegoDeMesa .u.|> juego
+VideoJuegos .u.|> juego
+VideoJuegos --> genero
+Genero .u.|> genero
 
 @enduml

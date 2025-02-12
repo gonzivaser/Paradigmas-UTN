@@ -1,3 +1,5 @@
+% EMPIEZA CODIGO CONSIGNA 
+
 % toma(Persona, Gaseosa). 
 % toma(Persona, vino(Tipo, AñosDeAñejamiento)).
 % toma(Persona, cerveza(Variedad, Amargor, PorcentajeAlcohol)).
@@ -19,37 +21,44 @@ tieneProblemas(Persona) :-
     length(Ts, CTs),
     CTs is CCs + CVs.
 
+% TERMINA CODIGO CONSIGNA 
 
-% PUNTO 1
-% a) Verdadero, no hay repeticion de logica porque las condiciones de filtrar en los findall varia segun la bebida
-% b) Falso, no es declarativa ya que no hay derivacion de logica y no se entienden los nombres de las variables
-% c) Verdadero, podria mejorarse con polimorfismo tratando de manera indistinta a las bebidas, por ejemplo tieneAlchol(UnaBebida)
+% 1
+/*
+   a) Falso, hay mucha repeticion de logica cuando se arma la lista de las bebidas alcholicas y de la longitud de 
+      esta lista
+   b) Falso, no es declarativa ya que no hay delegacion de logica alguna
+   c) Verdadero, ya que si se tratara a la bebida de forma indistinta (aplicando polimorfismo), eliminaria la 
+      repeticion de logica 
+*/
 
-% PUNTO 2
-% ?- tieneProblemas(P). 
-% Esta consulta, nos va a devolver las personas que tienen problemas con las bebidas alcoholicas
+% 2
+/*
+   El significado de esta consulta que se esta haciendo es que se muestren todos los nombres de las personas que 
+   cumplen con las condiciones de la regla "tieneProblemas(Persona)"
+*/
 
+% 3
+tieneProblemasMejorada(UnaPersona) :-
+    toma(UnaPersona, _), 
+    bebidasConAlcholQueToma(UnaPersona, CantidadDeBebidasConAlchol), 
+    bebidasSinAlcholQueToma(UnaPersona, CantidadDeBebidasSinAlchol), 
+    CantidadDeBebidasSinAlchol > CantidadDeBebidasConAlchol.
 
-% PUNTO 3
-tieneProblemasVol2(UnaPersona) :-
-    toma(UnaPersona, _),
-    bebidasConAlcholQueToma(UnaPersona, CantidadDeBebidasConAlchol),
-    bebidasSinAlcholQueToma(UnaPersona, CantidadDeBebidasSinAlchol),
-    CantidadDeBebidasConAlchol > CantidadDeBebidasSinAlchol.
 
 bebidasConAlcholQueToma(UnaPersona, CantidadDeBebidasConAlchol) :-
-    findall(Bebidas, (toma(UnaPersona, Bebidas), tieneAlchol(Bebidas)), BebidasConAlchol),
+    findall(Bebida, (toma(UnaPersona, Bebida), tieneAlchol(Bebida)), BebidasConAlchol), 
     length(BebidasConAlchol, CantidadDeBebidasConAlchol).
 
-
 bebidasSinAlcholQueToma(UnaPersona, CantidadDeBebidasSinAlchol) :-
-    findall(Bebidas, (toma(UnaPersona, Bebidas), not(tieneAlchol(Bebidas))), BebidasSinAlchol),
+    findall(Bebida, (toma(UnaPersona, Bebida), not(tieneAlchol(Bebida))), BebidasSinAlchol), 
     length(BebidasSinAlchol, CantidadDeBebidasSinAlchol).
-    
 
 tieneAlchol(UnaBebida) :-
     toma(_, vino(_, _)). 
 
 tieneAlchol(UnaBebida) :-
-    toma(_, cerveza(_, _, NivelDeAlchol)), 
-    NivelDeAlchol > 0.
+    toma(_, cerveza(_, _, CantidadDeAlchol)), 
+    CantidadDeAlchol > 0.
+
+

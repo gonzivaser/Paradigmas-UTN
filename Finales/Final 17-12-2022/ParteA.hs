@@ -1,37 +1,38 @@
-data Producto = Prod {
+-- EMPIEZA CODIGO CONSIGNA 
+data Producto = UnProducto {
     nombre :: String, 
     precio :: Int
 }
 
-queEmpieceConA :: Producto -> Bool
-queEmpieceConA = (== 'a') . head . nombre
+-- queEmpieceConA = (== 'a') . head . nombre
+-- barato = (< 50) . precio
 
-barato :: Producto -> Bool
-barato = (< 50) . precio
+-- restriccionesDeCompra = [queEmpieceConA, barato]
+-- TERMINA CODIGO CONSIGNA 
 
-
--- PUNTO 1
-type Restriccion = Producto -> Bool
-restriccionesDeCompra :: [Restriccion]
-restriccionesDeCompra = [queEmpieceConA, barato]
+-- 1
+-- [Producto -> Bool]
 
 
--- PUNTO 2
-queEmpieceConUnaLetra :: Char -> Producto -> Bool
-queEmpieceConUnaLetra unaLetra = (== unaLetra) . head . nombre
+-- 2
+queEmpieceCon :: Char -> Producto -> Bool
+queEmpieceCon unaLetra = (== unaLetra) . head . nombre
 
-restriccionesDeCompraVol2 :: [Restriccion]
-restriccionesDeCompraVol2 = [queEmpieceConUnaLetra 'a', barato]
+restriccionesDeCompra :: [Producto -> Bool]
+restriccionesDeCompra = [queEmpieceCon 'a']
 
--- El concepto que esta relacionado es aplicacion parcial, ya que estamos aplicando parcialmente la funcion queEmpieceConUnaLetra
+{--
+   El concepto que se esta aplicando aca es la aplicacion parcial, ya que a la funcion queEmpieceCon se le esta 
+   pasando uno de los dos parametros que esta necesita.
+--}
 
+-- 3
+prroductosElegidos :: [Producto] -> [Producto -> Bool] -> [Producto]
+prroductosElegidos unosProductos unasRestricciones = filter (\unProducto -> cumpleRestricciones unProducto unasRestricciones) unosProductos
 
--- PUNTO 3
-cumpleConCriterios :: [Producto] -> [Restriccion] -> [Producto]
-cumpleConCriterios unosProductos unasRestricciones = filter (\unProducto -> cumpleConRestriccion unProducto unasRestricciones) unosProductos
+cumpleRestricciones :: Producto -> [Producto -> Bool] -> Bool
+cumpleRestricciones unProducto unasRestricciones = any (\unaRestriccion -> unaRestriccion unProducto) unasRestricciones
 
-cumpleConRestriccion :: Producto -> [Restriccion] -> Bool
-cumpleConRestriccion unProducto unasRestricciones = all (\unaRestriccion -> unaRestriccion unProducto) unasRestricciones
-
--- Lo que destaca en la solucion es la expresividad en los nombres de las funciones, la declaratividad por la derivacion de logica, el uso de 
--- funciones de orden superior y el uso de funciones lambda para la aplicacion de criterios
+{--
+   Los conceptos que se destacan en la solucion planteada, serian los de aplicacion parcial y orden superior. 
+--}
