@@ -45,26 +45,24 @@ anosCalendarioTranscurridos(5, 5, 0).
 
 puedeInscribirse(UnAtleta, UnaCompetencia, UnaFecha) :-
     inscripcionGeneral(UnAtleta, _), 
+    competencia(UnaCompetencia), 
+    fecha(UnaFecha), 
     noParticipoEn(UnaCompetencia, UnAtleta), 
-    esFecha(UnaFecha), 
-    tieneInscripcionPermitida(UnAtleta, UnaCompetencia, UnaFecha).
-
-tieneInscripcionPermitida(UnAtleta, UnaCompetencia, UnaFecha) :-
-    inscripcionGeneral(UnAtleta, FechaDeInscripcion), 
-    anosCalendarioTranscurridos(FechaDeInscripcion, UnaFecha, 0). 
+    tieneInscripcionPermitida(UnAtleta, UnaCompetencia, UnaFecha). 
 
 tieneInscripcionPermitida(UnAtleta, UnaCompetencia, _) :-
-    forall(competenciaRequerida(CompetenciaPrevia, Competencia), participo(Atleta, CompetenciaPrevia, _)).
+    forall(competenciaRequerida(CompetenciaPrevia, UnaCompetencia), participo(UnAtleta, CompetenciaPrevia, _)).
 
+tieneInscripcionPermitida(UnAtleta, UnaCompetencia, UnaFecha) :-
+    inscripcionGeneral(UnAtleta, FechaInscripcion), 
+    anosCalendarioTranscurridos(FechaInscripcion, UnaFecha, 0).
 
-noParticipoEn(Competencia, Atleta) :-
-    esCompetencia(Competencia),
-    not(participo(Atleta, Competencia, _)).
+fecha(UnaFecha) :-
+    inscripcionGeneral(_, UnaFecha). 
 
-esCompetencia(Competencia) :-
-    participo(_, Competencia, _).
+competencia(UnaCompetencia) :-
+    participo(_, UnaCompetencia, _). 
 
-esFecha(Fecha) :-
-    inscripcionGeneral(_, Fecha).
-
+noParticipoEn(UnaCompetencia, UnAtleta) :-
+    not(participo(UnAtleta, UnaCompetencia, _)).
 
