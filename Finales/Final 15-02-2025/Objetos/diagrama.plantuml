@@ -1,0 +1,34 @@
+@startuml diagrama
+
+Class Calendario {
+    eventos
+
+    estaLibre(unaFecha)
+}
+
+interface eventos {
+    tieneDisponibilidad(unaFecha)
+}
+
+Class EventoDiaCompleto {
+    fecha 
+
+    tieneDisponibilidad(unaFecha)
+}
+
+object recordatorio {
+    tieneDisponibilidad(unaFecha)
+}
+
+Class EventoDeVariosDias {
+    fechas
+
+    tieneDisponibilidad(unaFecha)
+}
+
+Calendario --> "*" eventos : eventos
+EventoDiaCompleto .u.|> eventos
+recordatorio .u.|> eventos
+EventoDeVariosDias .u.|> eventos
+
+@enduml
