@@ -41,3 +41,10 @@ obesivoSuperadora(UnCliente) :-
     compro(UnCliente, UnProducto),
     marca(UnProducto, UnaMarca), 
     not((compro(UnCliente, OtroProducto), marca(OtroProducto, OtraMarca), UnaMarca \= OtraMarca)). 
+
+
+obsesivoConForall(UnCliente) :-
+    cliente(UnCliente), 
+    compro(UnCliente, UnProducto), 
+    marca(UnProducto, UnaMarca), 
+    forall(compro(UnCliente, OtroProducto), marca(OtroProducto, UnaMarca)). 
