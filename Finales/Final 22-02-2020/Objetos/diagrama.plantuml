@@ -1,0 +1,41 @@
+@startuml diagrama
+
+Class Heladeria {
+    facturado
+    stock 
+
+    venderPunto2(unProducto)
+    venderPunto3(unProducto)
+}
+
+interface producto {
+    stockRequerido()
+    esDeGustosTradicionales() 
+    precio()
+    precioConGustosTradicionales()
+}
+
+Class Cucurucho {
+    recargoPorCobertura
+    esDeGustosTradicionales
+
+    stockRequerido()
+    esDeGustosTradicionales() 
+    precio()
+    precioConGustosTradicionales()
+}
+
+Class KgDeHelado {
+    esDeGustosTradicionales
+
+    stockRequerido()
+    esDeGustosTradicionales() 
+    precio()
+    precioConGustosTradicionales()
+}
+
+Heladeria ..> producto
+Cucurucho .u.|> producto
+KgDeHelado .u.|> producto
+
+@enduml

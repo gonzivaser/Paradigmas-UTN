@@ -23,21 +23,28 @@ todosAltosConPrecioEn(Precio, Barrio) :-
 
 % 1
 /*
-   a) Verdadero,La solucion propuesta es correcta, pero con mucha repeticion de logica y falta de delegacion de esta
-   b) Falso, no es correcto, no se esta tratando polimorficamente a los distintos tipos de bienes.
-   c) Falso, el predicado no es inversible para lo que seria el Precio. No se asegura la existencia del Precio en ningun 
-      momento.  
+   a) Falso, no es correcto, porque no se esta verificando que TODOS los inmuebles altos superan el precio.
+   b) Falso, no es correcto, porque no se esta tratando a los diferentes inmuebles de manera indistinta
+   c) Falso, solo es inversible para el parametro "Barrio", no para el parametro "Precio", ya que no se esta generando 
+      en ningun momento.
 */
 
 % 2
-todosAltosConPrecioEnVol2(UnPrecio, UnBarrio) :-
-    precio(_, UnBarrio, UnPrecio).
+todosAltosConPrecioEnBienHecha(UnPrecio, UnBarrio) :-
+    precio(UnPrecio),
+    forall(esInmuebleAlto(UnBarrio, PrecioDeInmueble), PrecioDeInmueble >= UnPrecio).
 
-bienAlto(Barrio, casa(_, Pisos)) :-
-    Pisos > 3.
+esInmuebleAlto(UnBarrio, PrecioDeCasa) :-
+    precio(casa(_, PisosDeCasa), UnBarrio, PrecioDeCasa), 
+    PisosDeCasa > 3.
 
-bienAlto(Barrio, depto(_, Pisos, _)) :-
-    Pisos > 5. 
+esInmuebleAlto(UnBarrio, PrecioDeDepto) :-
+    precio(depto(_, PisosDeDepto, _), UnBarrio, PrecioDeDepto), 
+    PisosDeCasa > 5.
 
-bienAlto(Barrio, ph(_, Pisos, _)) :-
-    Pisos >= 2.
+esInmuebleAlto(UnBarrio, PrecioDePh) :-
+    precio(depto(_, PisosDePh, _), UnBarrio, PrecioDePh), 
+    PisosDePh >= 2.
+
+precio(UnPrecio) :-
+    precio(_, _, UnPrecio).

@@ -1,7 +1,7 @@
 -- 1
 {--
    podrianAyudar :: Problema -> [Persona] -> [Persona]
-   podrianAyudar unProblema unasPersonas = filter (tieneHabilidadBuscada unProblema) . habilidades $ unasPersonas
+   podrianAyudar unProblema unasPersonas = filter (\unaPersona -> any (tieneHabilidadBuscada unProblema) . habilidades $ unaPersona) unasPersonas
 
    tieneHabilidadBuscada :: Probelma -> [Habilidad] -> Bool
    tieneHabilidadBuscada unProblema unasHabilidades = any (\unaHabilidad -> sirve unProblema unaHabilidad) unasHabilidades

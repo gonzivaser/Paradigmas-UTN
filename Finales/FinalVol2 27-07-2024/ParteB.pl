@@ -35,12 +35,14 @@ seDivierte(Personaje) :-
       Si la longitud de la lista de compañeros animados es mayor o igual a 1, el personaje se divierte 
     
    b) No existen peliculas que no tengan personajes animados. Asi que creo una --> estaEn(rambo, rocky).
-   ?- aptaParaAmargos(Pelicula). --> Falso ya que al no ser inversible, no permite consultar si existe alguna pelicula apta para amargos
+   ?- aptaParaAmargos(buscandoANemo). --> Falso ya que esta nemo que es animado, entonces no es apta para amargos
    ?- aptaParaAmargos(rambo). --> Verdadero, ya que rambo es una pelicula que no cuenta con personajes animados  
-   ?- seDivierte(Personaje). --> Falso ya que al no ser inversible, no permite consultar si existe alguna pelicula apta para amargos
+   ?- seDivierte(rocky). --> Falso ya que no hay personajes animados en rambo
    ?- seDvierte(nemo). --> Verdadero, ya que tiene mas de 1 personaje animado como compañero  
 
-   c) 
+   c) ?- aptaParaAmargos(Pelicula). --> Falso, ya que no hay ninguna pelicula que no cunete con personajes animados
+      ?- seDivierte(Personaje). --> Verdadero, porque todas las peliculas en la base de conocimientos tienen personajes
+                                    animados, entonces todos los personajes se divierten
 */
 
 

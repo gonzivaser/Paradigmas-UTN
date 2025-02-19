@@ -1,47 +1,74 @@
 // 1
 /*
-   a) Verdadero, pero al no haber ningun manejo de errores/excepciones se provoca esto
-   b) Falso, no hay buen uso de polimorfismo, no se trata a los dos productos de manera indistinta, se estan aplicando
-      ifs, lo que genera el no aprovechar el polimorfismo
-   c) 
-   d) Falso, no se esta rompiendo el encapsulamiento del cucurucho ya que al atributo que se esta accediendo de este 
-      cuenta con los getters y setters correspondientes para que el encapsulamiento no sea roto
+   a) Verdadero, ya que no hay manejo de excepcion o errores a la hora de que suceda eso
+   b) Falso, no hay buen uso de polimorfismo ya que no se esta tratando a los productos de manera indistinta
+   c) Falso, estan bien distribuidas ya que la Clase Heladeria esta siendo la encargada de aumentar la facturacion y de 
+      disminuir el stock
+   d) Falso, no se rompe el encapsulamiento del cucurucho porque tiene los getters y setters correspondientes para 
+      que este no se rompa
 */
 
 
-// 2
+// 2 y 3
 class Heladeria {
-    var facturado
-    var stock
+    var facturado 
+    var stock 
 
-    method vender(unProducto) {
-        if (stock >= unProducto.cantidadDeStockUsado()) {
-            facturado += unProducto.costo()
-            stock -= unProducto.cantidadDeStockUsado()
+    method venderPunto2(unProducto) {
+        if (unProducto.stockRequerido() < stock) {
+            facturado += unProducto.precio()
+            stock -= unProducto.stockRequerido()
         } else {
-            throw new Exception (message = "No hay stock disponible")
+            throw new Exception (message = "No hay stock suficiente")
         }
     }
-}
 
-class KgDeHelado {
-    method cantidadDeStockUsado() {
-        return 1
+    method venderPunto3(unProducto) {
+        if(unProducto.stockRequerido() < stock) {
+            if(unProducto.esDeGustosTradicionales()) {
+                facturado += unProducto.precioConGustosTradicionales()
+                stock -= unProducto.stockRequerido()
+            } else {
+                facturado += unProducto.precio()
+                stock -= unProducto.stockRequerido()
+            }
+        } else {
+            throw new Exception (message = "No hay stock suficiente")
+        }
     }
 
-    method costo() {
-        return 200
-    }
 }
 
 class Cucurucho {
-    var recargoPorCobertura
+    var property recargoPorCobertura
+    var property esDeGustosTradicionales 
 
-    method cantidadDeStockUsado() {
+    method stockRequerido() {
         return 0.2
     }
 
-    method costo() {
+    method precio() {
         return 50 + recargoPorCobertura
+    }
+
+    method precioConGustosTradicionales() {
+        return 50 + recargoPorCobertura - (50 * 0.2)
+    }
+
+}
+
+class KgDeHelado {
+    var property esDeGustosTradicionales 
+
+    method stockRequerido() {
+        return 1
+    }
+
+    method precio() {
+        return 200
+    }
+
+    method precioConGustosTradicionales() {
+        return 200 - (200 * 0.2)
     }
 }
