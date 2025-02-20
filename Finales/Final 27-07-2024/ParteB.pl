@@ -1,3 +1,5 @@
+% EMPIEZA CODIGO CONSIGNA
+
 % estaEn(Pelicula, Personaje). 
 estaEn(buscandoANemo, nemo).
 estaEn(buscandoANemo, dory).
@@ -23,34 +25,43 @@ seDivierte(Personaje) :-
     length(Compas, CantidadCompas),
     CantidadCompas >= 1.
 
+% TERRMINA CODIGO CONSIGNA 
 
-% PUNTO 1
-% a) aptaParaAmargos/1: Relaciona una pelicula con los personajes que aparecen en ella, y esta es amarga si la lista de personajes que aparecen en la pelicula no tiene personajes animados.
-%    seDivierte/1: Relaciona un personaje con los personajes animados con los que comparte pelicula, y se divierte si comparte pelicula con al menos un personaje animado.
+% 1
+/*
+   a) El predicado aptoParaAmargos lo que hace es hacer una lista de personajes animados, y si la lista tiene una longitud
+      de 0, es aptaParaAmargos entonces. 
+      El predicado seDvierte lo que haces es hacer una lista de compañeros animados que tendria un personaje en una pelicula.
+      Si la longitud de la lista de compañeros animados es mayor o igual a 1, el personaje se divierte 
+    
+   b) No existen peliculas que no tengan personajes animados. Asi que creo una --> estaEn(rambo, rocky).
+   ?- aptaParaAmargos(buscandoANemo). --> Falso ya que esta nemo que es animado, entonces no es apta para amargos
+   ?- aptaParaAmargos(rambo). --> Verdadero, ya que rambo es una pelicula que no cuenta con personajes animados  
+   ?- seDivierte(rocky). --> Falso ya que no hay personajes animados en rambo
+   ?- seDvierte(nemo). --> Verdadero, ya que tiene mas de 1 personaje animado como compañero  
 
-% b) 
-% i. ?- aptaParaAmargos(quienEnganio). FALSE
-% ii. ?- aptaParaAmargos(buscandoANemo). TRUE
-% iii. ?- seDivierte(rogerRabbit). TRUE
-% iv. ?- seDivierte(dory). TRUE 
-
-% c) 
-% i. ?- aptaParaAmargos(_). --> Falso
-% ii. ?- seDivierte(_). --> Falso
+   c) ?- aptaParaAmargos(Pelicula). --> Falso, ya que no hay ninguna pelicula que no cunete con personajes animados
+      ?- seDivierte(Personaje). --> Verdadero, porque todas las peliculas en la base de conocimientos tienen personajes
+                                    animados, entonces todos los personajes se divierten
+*/
 
 
-% PUNTO 2 
-% aptaParaAmargos(Pelicula) --> El problema de declaratividad se da en el findall, ya que se esta utilizando una variable anonima para recorrer la lista de personajes que aparecen en la pelicula, y se esta preguntando si la cantidad de personajes que aparecen en la pelicula es 0, lo cual no es declarativo, ya que no se esta preguntando por la existencia de una pelicula que no tenga personajes animados, sino que se esta preguntando por la cantidad de personajes que aparecen en la pelicula.
-% seDivierte(Personaje) --> El probelma de declaratividad se da tambien en el findall, ya que no se instancia el Personaje antes de entrar a este y se pregunta si comparte pelicula con al menos un personaje animado, lo cual no es declarativo, ya que no se esta preguntando por la existencia de un personaje que comparta pelicula con al menos un personaje animado, sino que se esta preguntando por la cantidad de personajes animados con los que comparte pelicula.
+% 2
+/*
+   Hay mal uso de declaratividad en las soluciones propuestas porque no hay delegacion de logica en los predicados dados. 
+   Y tambien mal uso de pattern matching ya que no se ligan las cosas antes de entrar al findall por ejemplo. 
+*/
 
+% 3
+aptaParaAmargosBienHecha(UnaPelicula) :-
+    estaEn(UnaPelicula, _),
+    forall(estaEn(UnaPelicula, UnPersonaje), not(esAnimado(UnPersonaje))). 
 
-% PUNTO 3
-aptaParaAmargosVol2(UnaPelicula) :-
-    estaEn(UnaPelicula, _), 
-    forall(estaEn(UnaPelicula, UnPersonaje), not(esAnimado(UnPersonaje))).
-
-seDivierteVol2(UnPersonaje) :-
+seDivierteBienHecha(UnPersonaje) :-
     estaEn(UnaPelicula, UnPersonaje), 
-    estaEn(UnaPelicula, OtroPersonaje),
-    esAnimado(OtroPersonaje),
+    estaEn(UnaPelicula, OtroPersonaje), 
+    esAnimado(OtroPersonaje), 
     UnPersonaje \= OtroPersonaje.
+
+
+

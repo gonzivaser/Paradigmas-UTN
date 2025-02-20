@@ -1,34 +1,18 @@
--- PARA CADA MEDICAMENTO
-amoxicilina = cura "infeccion"
-bicarbonato = cura "picazon"
-ibuprofeno = cura "dolor" . cura "hinchazon"
-todosLosMedicamentos = [amoxicilina, bicarbonato, ibuprofeno]
+-- 1
+{--
+    medicamento :: Sintoma -> [Sintoma]
+    curaTodosLos :: [Sintoma] -> Medicamento -> Bool
+--}
 
+-- 2
+{--
+    En mejorMedicamentoPara se puede ver el concepto de aplicacion parcial ya que a curaTodosLos se le pasa uno de los
+    dos parametros que necesita. Y despues se puede ver el concepto de orden superior, ya que, se utiliza la funcion 
+    find, que esta es de este orden.
+--}
 
-cura sintoma = filter (\= sintoma)
-
--- PARA CADA ENFERMEDAD / CONJUNTO DE SINTOMAS 
-malMovimiento = ["dolor"]
-varicela = repeat "picazon"
-
-
--- ASUMIMOS QUE EXISTE AL MENOS UN MEDICAMENTO CAPAZ DE CURAR CADA ENFERMEDAD: 
-mejorMedicamentoPara sintomas = find(curaTodosLos sintomas) todosLosMedicamentos
-curaTodosLos sintomas medicamento = medicamento sintomas == []
-
-
--- PUNTO 1
-type Medicamento = [String] -> [String]
-type CuraTodosLos = [String] -> Medicamento -> Bool
-
--- PUNTO 2 cuales son los dos conceptos funcionales mas importantes aplicados en mejorMedicamentoPara
--- 1. Aplicacion parcial: En la definicion de mejorMedicamentoPara, se aplica parcialmente la funcion curaTodosLos
--- 2. Composicion: Se compone la funcion find con la funcion curaTodosLos para obtener el mejor medicamento para una enfermedad
-
--- PUNTO 3
--- QUE RESPONDE ESTA CONSULTA --> >mejorMedicamentoPara varicela
--- La respuesta de esta consulta es bicarbonato
-
--- Si se remplaza todosLosMedicamentos con los de abajo
--- sugestion sintomas = []
--- todosLosMedicamentos = [sugestion, amoxicilina, bicarbonato, ibuprofeno]
+-- 3
+{--
+    Devolveria "bicarbonato" ya que esta es la que cura la picazon, y por lazyEvaluation, va a buscar hasta que encuentre
+    uno que cumpla con la condicion.
+--}
