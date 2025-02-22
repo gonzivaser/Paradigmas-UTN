@@ -31,20 +31,17 @@ todosAltosConPrecioEn(Precio, Barrio) :-
 
 % 2
 todosAltosConPrecioEnBienHecha(UnPrecio, UnBarrio) :-
-    precio(UnPrecio),
-    forall(esInmuebleAlto(UnBarrio, PrecioDeInmueble), PrecioDeInmueble >= UnPrecio).
+    barrio(UnBarrio),
+    forall((precio(UnInmueble, UnBarrio, OtroPrecio), OtroPrecio >= UnPrecio), esInmuebleAlto(UnInmueble)).
 
-esInmuebleAlto(UnBarrio, PrecioDeCasa) :-
-    precio(casa(_, PisosDeCasa), UnBarrio, PrecioDeCasa), 
+esInmuebleAlto(casa(_, PisosDeCasa)) :-
     PisosDeCasa > 3.
+    
+esInmuebleAlto(dpto(_, PisoDeDepto, _)) :-
+    PisoDeDepto > 5.
+    
+esInmuebleAlto(ph(_, PisosDePh, _)) :-
+    PisosDePh > 2.
 
-esInmuebleAlto(UnBarrio, PrecioDeDepto) :-
-    precio(depto(_, PisosDeDepto, _), UnBarrio, PrecioDeDepto), 
-    PisosDeCasa > 5.
-
-esInmuebleAlto(UnBarrio, PrecioDePh) :-
-    precio(depto(_, PisosDePh, _), UnBarrio, PrecioDePh), 
-    PisosDePh >= 2.
-
-precio(UnPrecio) :-
-    precio(_, _, UnPrecio).
+barrio(UnBarrio) :-
+    precio(_, UnBarrio, _).

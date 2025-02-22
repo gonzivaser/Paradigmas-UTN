@@ -24,7 +24,7 @@ type Criterio = Producto -> Bool
 
 -- 2
 deMarca :: String -> [Producto] -> [Producto]
-deMarca unaMarca unosProductos = filter (== unaMarca) . marca unosProductos
+deMarca unaMarca unosProductos = filter (\unProducto -> (== unaMarca) . marca $ unProducto) unosProductos
 
 -- Ejemplo de invocacion: deMarca "Nike" ["Botines", "Remeras"]
 
